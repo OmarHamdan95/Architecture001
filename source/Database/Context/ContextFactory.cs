@@ -7,8 +7,13 @@ public sealed class ContextFactory : IDesignTimeDbContextFactory<Context>
 {
     public Context CreateDbContext(string[] args)
     {
-        const string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=Database;";
+        var optionsBuilder = new DbContextOptionsBuilder<Context>();
+        const string DbConnectionString = "Host=localhost;Port=5432;Database=Architecture;Username=architecture_user;Password=P@ssw0rd;";
 
-        return new Context(new DbContextOptionsBuilder<Context>().UseSqlServer(connectionString).Options);
+        optionsBuilder.UseNpgsql(DbConnectionString);
+
+        //optionsBuilder.UseNpgsql(DbConnectionString);
+
+        return new Context(optionsBuilder.Options);
     }
 }

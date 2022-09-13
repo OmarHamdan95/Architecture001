@@ -11,25 +11,32 @@ var builder = WebApplication.CreateBuilder();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddHashService();
+builder.Services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
 builder.Services.AddResponseCompression();
+builder.Services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSpaStaticFiles("Frontend");
-builder.Services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
-builder.Services.AddContext<Context>(options => options.UseSqlServer(builder.Services.GetConnectionString(nameof(Context))));
+//builder.Services.AddContext<Context>(options => options.UseSqlServer(builder.Services.GetConnectionString(nameof(Context))));
+builder.Services.AddDbContext<Context>(x => x.UseLazyLoadingProxies().UseNpgsql(builder.Services.GetConnectionString(nameof(Context))));
+
 builder.Services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
-builder.Services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
 
 var application = builder.Build();
 
 application.UseException();
 application.UseHttps();
-application.UseResponseCompression();
-application.UseSwagger();
-application.UseSwaggerUI();
 application.UseRouting();
+application.UseResponseCompression();
 application.UseAuthentication();
 application.UseAuthorization();
-application.UseEndpoints(endpoints => endpoints.MapControllers());
+application.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+application.UseSwagger();
+application.UseSwaggerUI();
 application.UseSpaAngular("Frontend", "start", "http://localhost:4200");
 
 application.Run();

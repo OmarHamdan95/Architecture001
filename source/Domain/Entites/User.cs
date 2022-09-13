@@ -2,7 +2,7 @@ using DotNetCore.Domain;
 
 namespace Architecture.Domain;
 
-public class User : Entity<long>
+public class User : EntityBase
 {
     public User
     (

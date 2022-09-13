@@ -8,7 +8,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable(nameof(User), nameof(User));
+        //builder.ToTable(nameof(User), nameof(User));
 
         builder.HasKey(user => user.Id);
 

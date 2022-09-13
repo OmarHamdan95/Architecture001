@@ -2,7 +2,7 @@ using DotNetCore.Domain;
 
 namespace Architecture.Domain;
 
-public class Auth : Entity<long>
+public class Auth : EntityBase
 {
     public Auth
     (

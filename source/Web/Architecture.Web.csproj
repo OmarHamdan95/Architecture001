@@ -7,6 +7,7 @@
         <PackageReference Include="DotNetCore.AspNetCore" Version="16.70.0" />
         <PackageReference Include="DotNetCore.IoC" Version="16.70.0" />
         <PackageReference Include="DotNetCore.Logging" Version="16.70.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.9" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
     <ItemGroup>
