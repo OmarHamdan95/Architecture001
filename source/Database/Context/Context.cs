@@ -1,4 +1,5 @@
 using System.Reflection;
+using Architecture.Database.Constants;
 using Architecture.Database.DataBase;
 using Architecture.Domain;
 using DotNetCore.Domain;
@@ -26,7 +27,7 @@ public sealed class Context : DBContextBase
             .ToList();
 
 
-        builder.ApplyConvention(domainTypes, "Architecture");
+        builder.ApplyConvention(domainTypes, DatabaseConstants.DB_SCHEMA_NAME);
 
         builder.ApplyConfigurationsFromAssembly(typeof(Database._IAssemblyMark).Assembly);
 
