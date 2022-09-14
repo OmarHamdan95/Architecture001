@@ -2,6 +2,7 @@ using Architecture.Application;
 using Architecture.Model;
 using DotNetCore.AspNetCore;
 using DotNetCore.Objects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Architecture.Web;
@@ -21,6 +22,7 @@ public sealed class UserController : ControllerBase
     public IActionResult Delete(long id) => _userService.DeleteAsync(id).ApiResult();
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public IActionResult Get(long id) => _userService.GetAsync(id).ApiResult();
 
     [HttpGet("grid")]
