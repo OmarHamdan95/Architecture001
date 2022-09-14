@@ -17,11 +17,11 @@ public class Auth : EntityBase
         Salt = Guid.NewGuid().ToString();
     }
 
-    public string Login { get; private set; }
+    public virtual string Login { get; private set; }
 
-    public string Password { get; private set; }
+    public virtual string Password { get; private set; }
 
-    public string Salt { get; private set; }
+    public virtual string Salt { get; private set; }
 
     private readonly List<Role> _roles = new List<Role>();
 

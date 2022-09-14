@@ -1,6 +1,6 @@
 ﻿using DotNetCore.Domain;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using SoftCircuits.Wordify;
 
 namespace Architecture.Database;
 

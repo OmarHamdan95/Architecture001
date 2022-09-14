@@ -19,14 +19,15 @@ public sealed class UserRepository : EFRepository<User>, IUserRepository
     public Task<UserModel> GetModelAsync(long id)
     {
         System.Diagnostics.Debugger.Launch();
-        var result = Queryable.WhereEven(x => x.Id);
+        //var result = Queryable.WhereEven(x => x.Id);
 
 
-        var result2 = Queryable.StringStartWith(x => x.Name.FirstName, "Email");
+        //var result2 = Queryable.StringStartWith(x => x.Name.NameAr, "Email");
 
+        //var t = Queryable.AsExtendable().WhereAny(x => x.Email == "e");
 
-        var e = result2.Select(UserExpression.AuthId).SingleOrDefaultAsync();
-        var y = result.Select(UserExpression.AuthId).SingleOrDefaultAsync();
+        //var e = result2.Select(UserExpression.AuthId).SingleOrDefaultAsync();
+        //var y = result.Select(UserExpression.AuthId).SingleOrDefaultAsync();
 
         return Queryable.Where(UserExpression.Id(id)).Select(UserExpression.Model).SingleOrDefaultAsync();
     }

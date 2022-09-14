@@ -2,6 +2,6 @@
 
 public class Status : LookupBase
 {
-    public string? Code { get; private set; }
-    public Name Name { get; private set; }
+    public virtual string? Code { get; private set; }
+    public virtual Name Name { get; private set; }
 }

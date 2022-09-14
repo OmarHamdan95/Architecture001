@@ -1,5 +1,6 @@
 using Architecture.Application;
 using Architecture.Database;
+using Architecture.Web;
 using DotNetCore.AspNetCore;
 using DotNetCore.EntityFrameworkCore;
 using DotNetCore.IoC;
@@ -18,6 +19,7 @@ builder.Services.AddResponseCompression();
 builder.Services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddProfiler();
 //builder.Services.AddSpaStaticFiles("Frontend");
 //builder.Services.AddContext<Context>(options => options.UseSqlServer(builder.Services.GetConnectionString(nameof(Context))));
 builder.Services.AddDbContext<Context>(x =>
@@ -33,14 +35,18 @@ var application = builder.Build();
 
 application.UseException();
 application.UseHttps();
+
 application.UseRouting();
 application.UseResponseCompression();
+application.UseMiniProfiler();
 application.UseAuthentication();
 application.UseAuthorization();
+
 application.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
 application.UseSwagger();
 application.UseSwaggerUI();
 //application.UseSpaAngular("Frontend", "start", "http://localhost:4200");

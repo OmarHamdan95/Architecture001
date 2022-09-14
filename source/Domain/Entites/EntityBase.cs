@@ -2,12 +2,12 @@
 
 public class EntityBase
 {
-    public long Id { get; set; }
-    public string CreatedBy { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public string ModifiedBy { get; set; }
-    public DateTime ModifiedDate { get; set; }
-    public bool IsDeleted { get; set; }
+    public virtual long Id { get; set; }
+    public virtual string CreatedBy { get; set; }
+    public virtual DateTime CreatedDate { get; set; }
+    public virtual string ModifiedBy { get; set; }
+    public virtual DateTime ModifiedDate { get; set; }
+    public virtual bool IsDeleted { get; set; }
 }
 
 public class LookupBase : EntityBase
