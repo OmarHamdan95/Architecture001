@@ -10,7 +10,7 @@ public sealed class UserFactory : IUserFactory
         return new User
         (
             new Name(model.FirstName, model.LastName),
-            new Email(model.Email),
+            model.Email,
             auth
         );
     }

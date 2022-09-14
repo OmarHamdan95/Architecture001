@@ -79,7 +79,7 @@ public sealed class AuthService : IAuthService
 
         claims.AddSub(auth.Id.ToString());
 
-        claims.AddRoles(auth.Roles.ToArray());
+        //claims.AddRoles(auth.Roles.ToArray());
 
         var token = _jwtService.Encode(claims);
 

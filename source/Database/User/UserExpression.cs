@@ -11,9 +11,9 @@ public static class UserExpression
     public static Expression<Func<User, UserModel>> Model => user => new UserModel
     {
         Id = user.Id,
-        FirstName = user.Name.FirstName,
-        LastName = user.Name.LastName,
-        Email = user.Email.Value
+        FirstName = user.Name.NameAr,
+        LastName = user.Name.NameEn,
+        Email = user.Email
     };
 
     public static Expression<Func<User, bool>> Id(long id)

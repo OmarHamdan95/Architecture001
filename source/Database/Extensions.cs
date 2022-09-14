@@ -22,10 +22,10 @@ public static class DbExtensions
             var typeProperties = type.GetProperties();
             foreach (var property in typeProperties)
             {
-                if (property.PropertyType.IsSealed)
+                if (property.PropertyType.IsSubclassOf(typeof(ValueObject)))
                     entityConfig.OwnsOne(property.PropertyType, property.Name);
-                if (property.Name == "Id")
-                    entityConfig.HasKey( property.Name);
+                // if (property.Name == "Id")
+                //     entityConfig.HasKey( property.Name);
 
                 // if (property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(DateTime?))
                 //     entityConfig.Property(property.PropertyType, property.Name).HasConversion<DateUtcConverter>();

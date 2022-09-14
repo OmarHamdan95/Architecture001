@@ -7,13 +7,13 @@ public class Auth : EntityBase
     public Auth
     (
         string login,
-        string password,
-        Roles roles
+        string password
+        // Roles roles
     )
     {
         Login = login;
         Password = password;
-        Roles = roles;
+        //Roles = roles;
         Salt = Guid.NewGuid().ToString();
     }
 
@@ -23,7 +23,9 @@ public class Auth : EntityBase
 
     public string Salt { get; private set; }
 
-    public Roles Roles { get; private set; }
+    private readonly List<Role> _roles = new List<Role>();
+
+    public virtual IReadOnlyCollection<Role> Role => _roles.AsReadOnly();
 
     public void UpdatePassword(string password)
     {

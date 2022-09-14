@@ -8,6 +8,6 @@ public sealed class AuthModelValidator : AbstractValidator<AuthModel>
     {
         RuleFor(auth => auth.Login).NotEmpty();
         RuleFor(auth => auth.Password).NotEmpty();
-        RuleFor(auth => auth.Roles).NotEmpty();
+        //RuleFor(auth => auth.Roles).NotEmpty();
     }
 }

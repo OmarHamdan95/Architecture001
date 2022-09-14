@@ -14,7 +14,7 @@ public sealed class Context : DBContextBase
     protected override void OnModelCreating(ModelBuilder builder)
     {
         //System.Diagnostics.Debugger.Launch();
-
+        //System.Diagnostics.Debugger.Launch();
         base.OnModelCreating(builder);
 
         var domainTypes = Assembly
@@ -22,7 +22,8 @@ public sealed class Context : DBContextBase
             .GetTypes()
             .Where(
                 myType =>
-                    myType.IsClass && !myType.IsSealed  && !myType.IsAbstract && myType.IsSubclassOf(typeof(EntityBase))
+                    myType.IsClass && !myType.IsSealed && myType.Name != nameof(LookupBase)
+                                   && !myType.IsAbstract && myType.IsSubclassOf(typeof(EntityBase))
             )
             .ToList();
 

@@ -14,7 +14,7 @@ public sealed class AuthConfiguration : IEntityTypeConfiguration<Auth>
 
         builder.HasIndex(auth => auth.Login).IsUnique();
 
-        builder.Property(auth => auth.Id).ValueGeneratedOnAdd().IsRequired();
+        //builder.Property(auth => auth.Id).ValueGeneratedOnAdd().IsRequired();
 
         builder.Property(auth => auth.Login).HasMaxLength(100).IsRequired();
 
@@ -22,6 +22,6 @@ public sealed class AuthConfiguration : IEntityTypeConfiguration<Auth>
 
         builder.Property(auth => auth.Salt).HasMaxLength(1000).IsRequired();
 
-        builder.Property(auth => auth.Roles).IsRequired();
+        //b//uilder.Property(auth => auth.Roles).IsRequired();
     }
 }

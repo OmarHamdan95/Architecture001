@@ -1,3 +1,3 @@
-namespace Architecture.Domain;
-
-public sealed record Email(string Value);
+// namespace Architecture.Domain;
+//
+// public sealed record Email(string Value);
