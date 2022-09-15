@@ -5,6 +5,7 @@
     <ItemGroup>
         <PackageReference Include="DotNetCore.EntityFrameworkCore" Version="16.70.0" />
         <PackageReference Include="DotNetCore.Objects" Version="16.70.0" />
+        <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
             <PrivateAssets>all</PrivateAssets>

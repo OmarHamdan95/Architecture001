@@ -8,47 +8,38 @@ using DotNetCore.Logging;
 using DotNetCore.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder();
+var configuration = builder.Configuration;
+Log.Logger = CreateSerilogLogger(configuration);
 
-builder.Host.UseSerilog();
-
-builder.Services.AddHashService();
-builder.Services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
-builder.Services.AddResponseCompression();
-builder.Services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddProfiler();
-//builder.Services.AddSpaStaticFiles("Frontend");
-//builder.Services.AddContext<Context>(options => options.UseSqlServer(builder.Services.GetConnectionString(nameof(Context))));
-builder.Services.AddDbContext<Context>(x =>
-    x.UseLazyLoadingProxies().UseNpgsql(builder.Services.GetConnectionString(nameof(Context))));
-// builder.Services.AddDbContextPool<Context>(o =>
-// {
-//     o.ReplaceService<IQueryCompilationContextFactory, QueryCompilationFactory>();
-// });
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork<Context>>();
-builder.Services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
-
-var application = builder.Build();
-
-application.UseException();
-application.UseHttps();
-
-application.UseRouting();
-application.UseResponseCompression();
-application.UseMiniProfiler();
-application.UseAuthentication();
-application.UseAuthorization();
-
-application.UseEndpoints(endpoints =>
+try
 {
-    endpoints.MapControllers();
-});
+    builder.Services.RegisterApplicationDependencies(configuration);
 
-application.UseSwagger();
-application.UseSwaggerUI();
-//application.UseSpaAngular("Frontend", "start", "http://localhost:4200");
+    builder.ConfigureSerilog();
 
-application.Run();
+    var app = builder.Build();
+
+    app.ConfigureApp(configuration);
+
+    app.Run();
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", typeof(Program).Namespace);
+    Log.Logger.Error(ex, "Program terminated unexpectedly ({ApplicationContext})!", typeof(Program).Assembly.FullName);
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
+Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)
+{
+    return new LoggerConfiguration()
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+}
