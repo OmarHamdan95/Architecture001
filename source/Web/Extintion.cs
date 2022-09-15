@@ -1,4 +1,5 @@
-﻿using DotNetCore.AspNetCore;
+﻿using Architecture.Domain.Middlewares;
+using DotNetCore.AspNetCore;
 using Mapster;
 using Serilog;
 using StackExchange.Profiling.Storage;
@@ -44,24 +45,10 @@ public static class Extintion
             .UseSerilog();
     }
 
-    public static void ConfigureApp(this WebApplication app, IConfiguration configuration)
+
+
+    public static IApplicationBuilder UseLocalization(this IApplicationBuilder applicationBuilder)
     {
-        // Configure the HTTP request pipeline.
-        app.UseException();
-        app.UseHttps();
-
-        app.UseRouting();
-        app.UseResponseCompression();
-        app.UseMiniProfiler();
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        //application.UseSpaAngular("Frontend", "start", "http://localhost:4200");
-
-        app.Run();
+        return applicationBuilder.UseMiddleware<LocalizationMiddleware>();
     }
 }

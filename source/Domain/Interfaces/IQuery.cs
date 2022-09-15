@@ -12,7 +12,7 @@ public interface IQuery<TInput,TResult>
 
 public interface IQueryFactory
 {
-    IQuery<TInput, TResult> CreatQuery<TInput, TResult>();
+    IQuery<TInput, TResult> CreateQuery<TInput, TResult>();
     TQuery CreateQuery<TQuery>();
 }
 

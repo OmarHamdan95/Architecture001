@@ -36,6 +36,7 @@ namespace Architecture.Database.Queries
             return (IQuery<TInput, TResult>)_serviceProvider.GetService(typeof(IQuery<TInput, TResult>));
         }
 
+
         public TQuery CreateQuery<TQuery>()
         {
             return (TQuery) _serviceProvider.GetService(typeof(TQuery));

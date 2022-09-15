@@ -12,4 +12,6 @@ public class EntityBase
 
 public class LookupBase : EntityBase
 {
+    public string? Code { get; private set; }
+    public Name Description { get; set; }
 }

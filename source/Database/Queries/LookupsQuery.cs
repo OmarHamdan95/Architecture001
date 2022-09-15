@@ -63,8 +63,8 @@ public class LookupsQuery : QueryBase, ILookupsQuery
         var query = Query<T>();
         if (string.IsNullOrEmpty(text) == false)
         {
-            query = query.Where(l => l.Description.Lang1.Contains(text) ||
-                                        l.Description.Lang2.Contains(text));
+            query = query.Where(l => l.Description.NameAr.Contains(text) ||
+                                        l.Description.NameEn.Contains(text));
         }
 
         if (limt != null)
@@ -113,8 +113,8 @@ public class LookupsQuery : QueryBase, ILookupsQuery
         var query = Query<T>();
         if(text.IsNotNullOrEmpty())
             query = query.Where(x => x.Code.Contains(text) ||
-                                x.Description.Lang1.Contains(text) ||
-                                x.Description.Lang2.Contains(text)
+                                x.Description.NameAr.Contains(text) ||
+                                x.Description.NameEn.Contains(text)
                             );
 
         var result = await query
