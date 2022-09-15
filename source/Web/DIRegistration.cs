@@ -1,5 +1,6 @@
 ﻿using Architecture.Application;
 using Architecture.Database;
+using Architecture.Database.UnitOfWork;
 using DotNetCore.AspNetCore;
 using DotNetCore.EntityFrameworkCore;
 using DotNetCore.IoC;
@@ -20,10 +21,9 @@ public static class DIRegistration
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddProfiler();
-//builder.Services.AddSpaStaticFiles("Frontend");
-//builder.Services.AddContext<Context>(options => options.UseSqlServer(builder.Services.GetConnectionString(nameof(Context))));
+
         services.AddContext(configuration);
-        services.AddScoped<IUnitOfWork, UnitOfWork<Context>>();
+        services.AddScoped<IAsyncUnitOfWork, UnitOfWork>();
         services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
 
         Extintion.ConfiguerMapster();
