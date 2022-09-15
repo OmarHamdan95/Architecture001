@@ -4,5 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="DotNetCore.Domain" Version="16.70.0" />
+        <PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0.0" />
+        <PackageReference Include="SoftCircuits.Wordify" Version="1.0.8" />
     </ItemGroup>
 </Project>
