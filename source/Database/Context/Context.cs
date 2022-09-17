@@ -2,6 +2,7 @@ using System.Reflection;
 using Architecture.Database.Constants;
 using Architecture.Database.DataBase;
 using Architecture.Domain;
+using Architecture.Domain.BaseDto;
 using DotNetCore.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,9 @@ public sealed class Context : DBContextBase
         builder.ApplyConvention(domainTypes, DatabaseConstants.DB_SCHEMA_NAME);
 
         builder.ApplyConfigurationsFromAssembly(typeof(Database._IAssemblyMark).Assembly);
+
+        var viewDomainTypes = GetEntityViews();
+        builder.AddViewEntityTypes(viewDomainTypes, DatabaseConstants.DB_SCHEMA_NAME,false);
 
         this.Seed(builder);
     }
@@ -71,5 +75,14 @@ public sealed class Context : DBContextBase
         //         Value = "administrator@administrator.com"
         //     });
         // });
+    }
+
+    private static List<Type> GetEntityViews()
+    {
+        var viewDomainTypes = Assembly.GetAssembly(typeof(Domain._IAssemblyMark))
+            .GetTypes().Where(mt => mt.IsClass && !mt.IsAbstract && mt.IsSubclassOf(typeof(ViewEntityBase)))
+            .ToList();
+
+        return viewDomainTypes;
     }
 }

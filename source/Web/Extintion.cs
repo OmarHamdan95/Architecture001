@@ -28,15 +28,6 @@ public static class Extintion
         //TypeAdapterConfig.GlobalSettings.Default.MaxDepth(3);
         TypeAdapterConfig.GlobalSettings.Default.IgnoreMember((member, side) =>
             side == MemberSide.Destination && member.SetterModifier == AccessModifier.Private);
-
-        // TypeAdapterConfig.GlobalSettings.ForType<User, UserResultDto>()
-        //     .Map(dest => dest.UserAddresses, src => src.UserAddresses);
-
-        //TypeAdapterConfig.GlobalSettings.ForType<applicationEntity.Application, LookupDto>()
-        //    .Map(dest => dest.Description, src => src.Name);
-
-        //TypeAdapterConfig.GlobalSettings.ForType<Permission, LookupDto>()
-        //    .Map(dest => dest.Description, src => src.Name);
     }
 
     public static void ConfigureSerilog(this WebApplicationBuilder builder)

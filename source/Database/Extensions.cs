@@ -38,4 +38,16 @@ public static class DbExtensions
         var name = @this.Name.Pluralize();
         return name;
     }
+
+    public static void AddViewEntityTypes(this ModelBuilder builder, List<Type> viewDomainTypes, string schemaName,
+        bool includeInMigration = false)
+    {
+        foreach (var type in viewDomainTypes)
+        {
+            var entityconfig = builder.Entity(type);
+            entityconfig.Metadata.SetIsTableExcludedFromMigrations(!includeInMigration);
+        }
+
+        builder.ApplyConvention(viewDomainTypes, schemaName);
+    }
 }

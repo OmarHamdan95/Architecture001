@@ -1,7 +1,10 @@
 ﻿using Architecture.Application;
 using Architecture.Database;
+using Architecture.Database.DataBase;
+using Architecture.Database.Implementation;
 using Architecture.Database.Queries;
 using Architecture.Database.UnitOfWork;
+using Architecture.Domain.Interfaces;
 using DotNetCore.AspNetCore;
 using DotNetCore.EntityFrameworkCore;
 using DotNetCore.IoC;
@@ -24,8 +27,11 @@ public static class DIRegistration
         services.AddProfiler();
 
         services.AddContext(configuration);
+
         services.AddScoped<IAsyncUnitOfWork, UnitOfWork>();
-        services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
+
+        //services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
+        //services.AddClassesMatchingInterfaces(typeof(ILookupsQuery).Assembly, typeof(LookupsQuery).Assembly);
         services.AddQueries();
 
         Extintion.ConfiguerMapster();
@@ -39,6 +45,9 @@ public static class DIRegistration
 
         var connectionString = configuration.GetConnectionString(nameof(Context));
         services.AddDbContext<Context>(x => x.UseLazyLoadingProxies().UseNpgsql(connectionString));
+
+        services.AddScoped<DBContextBase>(provide => provide.GetService<Context>());
+        services.AddScoped<IQueryContext, QueryContext>();
         //services.AddDbContext<IntegrationEventLogContext>(x => x.UseLazyLoadingProxies().UseNpgsql(eventLogConnectionString));
     }
 
@@ -69,5 +78,6 @@ public static class DIRegistration
         service.AddScoped(typeof(ISearchQuery<,>), typeof(SearchQuery<,>));
         service.AddScoped(typeof(IListQuery<,>), typeof(ListQuery<,>));
         service.AddScoped(typeof(IGetByIdQuery<,>), typeof(GetByIdQuery<,>));
+        //service.AddScoped(typeof(ILookupsQuery), typeof(LookupsQuery));
     }
 }
