@@ -6,4 +6,5 @@ public class TreeDto
     public NameDto? Description { get; set; }
     public string? Code { get; set; }
     public TreeDto Parent { get; set; }
+    //blic List<
 }
