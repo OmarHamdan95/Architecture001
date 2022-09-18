@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Architecture.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Architecture.Database.DataBase;
@@ -28,6 +29,7 @@ public class DBContextBase: DbContext
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        //ApplyAudit();
         return base.SaveChangesAsync(cancellationToken);
     }
 
@@ -91,4 +93,12 @@ public class DBContextBase: DbContext
             }
         }
     }
+
+    // protected virtual void ApplyAudit()
+    // {
+    //     foreach (var entity in ChangeTracker.Entries())
+    //     {
+    //         if(entity.Entity is IEntityBase audetEntity)
+    //     }
+    // }
 }

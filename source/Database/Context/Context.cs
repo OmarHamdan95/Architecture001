@@ -23,7 +23,7 @@ public sealed class Context : DBContextBase
             .GetTypes()
             .Where(
                 myType =>
-                    myType.IsClass && !myType.IsSealed && myType.Name != nameof(LookupBase)
+                    myType.IsClass && !myType.IsSealed
                                    && !myType.IsAbstract && myType.IsSubclassOf(typeof(EntityBase))
             )
             .ToList();

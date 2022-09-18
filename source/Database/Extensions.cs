@@ -1,4 +1,5 @@
-﻿using DotNetCore.Domain;
+﻿
+using Architecture.Domain;
 using Microsoft.EntityFrameworkCore;
 using SoftCircuits.Wordify;
 

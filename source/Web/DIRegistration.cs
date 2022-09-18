@@ -1,7 +1,6 @@
 ﻿using Architecture.Application;
 using Architecture.Database;
 using Architecture.Database.DataBase;
-using Architecture.Database.Implementation;
 using Architecture.Database.Queries;
 using Architecture.Database.UnitOfWork;
 using Architecture.Domain.Interfaces;

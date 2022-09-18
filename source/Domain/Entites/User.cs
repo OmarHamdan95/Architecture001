@@ -19,14 +19,14 @@ public class User : EntityBase
 
     public User(long id) => Id = id;
 
-    public virtual Name Name { get; private set; }
+    public virtual Name? Name { get; private set; }
 
     public virtual string Email { get; private set; }
 
-    public virtual Status Status { get; private set; }
+    public virtual Status? Status { get; private set; }
     public virtual long? StatusId { get; private set; }
 
-    public virtual Auth Auth { get; private set; }
+    public virtual Auth? Auth { get; private set; }
     public virtual long? AuthId { get; private set; }
 
     public void Activate()

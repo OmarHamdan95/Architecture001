@@ -1,4 +1,4 @@
-using DotNetCore.Domain;
+
 
 namespace Architecture.Domain;
 
@@ -18,7 +18,8 @@ public class Name : ValueObject
 
     public string NameAr { get; private set; }
     public string NameEn { get; private set; }
-    protected override IEnumerable<object> Equals()
+
+    protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return NameAr;
         yield return NameEn;

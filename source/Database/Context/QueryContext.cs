@@ -1,7 +1,7 @@
 ﻿using Architecture.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Architecture.Database.Implementation;
+namespace Architecture.Database;
 
 public class QueryContext : IQueryContext
 {
