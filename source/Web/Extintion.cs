@@ -25,7 +25,7 @@ public static class Extintion
     {
         TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
         TypeAdapterConfig.GlobalSettings.Default.MapToConstructor(true);
-        //TypeAdapterConfig.GlobalSettings.Default.MaxDepth(3);
+       // TypeAdapterConfig.GlobalSettings.Default.MaxDepth(1);
         TypeAdapterConfig.GlobalSettings.Default.IgnoreMember((member, side) =>
             side == MemberSide.Destination && member.SetterModifier == AccessModifier.Private);
     }

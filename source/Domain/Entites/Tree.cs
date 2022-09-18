@@ -24,9 +24,9 @@ public class Tree : EntityBase
 
 public class FlateParentTree : ViewEntityBase
 {
-    public virtual Tree? Tree { get; set; }
+    public virtual Tree Tree { get; set; }
     public virtual long? TreeId { get; set; }
-    public virtual Tree? Parent { get; set; }
+    public virtual Tree Parent { get; set; }
     public virtual long? ParentId { get; set; }
     public virtual long? GrandParentId { get; set; }
 }

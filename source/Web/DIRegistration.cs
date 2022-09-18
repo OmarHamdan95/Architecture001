@@ -2,6 +2,7 @@
 using Architecture.Database;
 using Architecture.Database.DataBase;
 using Architecture.Database.Queries;
+using Architecture.Database.Queries.QueriesCustome;
 using Architecture.Database.UnitOfWork;
 using Architecture.Domain.Interfaces;
 using DotNetCore.AspNetCore;
@@ -77,6 +78,7 @@ public static class DIRegistration
         service.AddScoped(typeof(ISearchQuery<,>), typeof(SearchQuery<,>));
         service.AddScoped(typeof(IListQuery<,>), typeof(ListQuery<,>));
         service.AddScoped(typeof(IGetByIdQuery<,>), typeof(GetByIdQuery<,>));
+        service.AddScoped<ITreeQuery, TreeQuery>();
         //service.AddScoped(typeof(ILookupsQuery), typeof(LookupsQuery));
     }
 }
