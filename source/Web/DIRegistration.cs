@@ -1,13 +1,10 @@
-﻿using Architecture.Application;
-using Architecture.Database;
+﻿using Architecture.Database;
 using Architecture.Database.DataBase;
 using Architecture.Database.Queries;
 using Architecture.Database.Queries.QueriesCustome;
 using Architecture.Database.UnitOfWork;
 using Architecture.Domain.Interfaces;
 using DotNetCore.AspNetCore;
-using DotNetCore.EntityFrameworkCore;
-using DotNetCore.IoC;
 using DotNetCore.Security;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="DotNetCore.AspNetCore" Version="16.70.0" />
