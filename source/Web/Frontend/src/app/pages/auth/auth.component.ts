@@ -24,7 +24,7 @@ import { AuthModel } from "src/app/models/auth.model";
 export class AppAuthComponent {
     form = inject(FormBuilder).group({
         login: ["admin", Validators.required],
-        password: ["admin", Validators.required]
+        password: ["P@ssw0rd", Validators.required]
     });
 
     constructor(private readonly appAuthService: AppAuthService) { }

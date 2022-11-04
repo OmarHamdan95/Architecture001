@@ -7,7 +7,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
     constructor(private readonly appAuthService: AppAuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler) {
+
         request = request.clone({
+            url : "http://localhost:8090/" + request.url,
             setHeaders: { Authorization: `Bearer ${this.appAuthService.token()}` }
         });
 

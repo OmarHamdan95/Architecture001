@@ -1,4 +1,6 @@
-﻿using Architecture.Domain.Middlewares;
+﻿using Architecture.Database.Repositories;
+using Architecture.Domain.Interfaces;
+using Architecture.Domain.Middlewares;
 using DotNetCore.AspNetCore;
 using Mapster;
 using Serilog;
@@ -41,5 +43,12 @@ public static class Extintion
     public static IApplicationBuilder UseLocalization(this IApplicationBuilder applicationBuilder)
     {
         return applicationBuilder.UseMiddleware<LocalizationMiddleware>();
+    }
+
+    public static void AddMatchingInterfaces(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
+        //services.AddScoped<typeof(IAsyncRepository<>), typeof(RepositoryBase<>) > ();
     }
 }

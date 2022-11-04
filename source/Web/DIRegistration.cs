@@ -1,4 +1,5 @@
-﻿using Architecture.Database;
+﻿using Architecture.Application;
+using Architecture.Database;
 using Architecture.Database.DataBase;
 using Architecture.Database.Queries;
 using Architecture.Database.Queries.QueriesCustome;
@@ -19,13 +20,28 @@ public static class DIRegistration
         services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
         services.AddResponseCompression();
         services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
+        services.AddApiCorsSupport();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddProfiler();
 
+
         services.AddContext(configuration);
 
+        services.AddMatchingInterfaces(configuration);
+
+
+
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserFactory, UserFactory>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAuthFactory, AuthFactory>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IHashService, HashService>();
+        services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IAsyncUnitOfWork, UnitOfWork>();
+
 
         //services.AddClassesMatchingInterfaces(typeof(IUserService).Assembly, typeof(IUserRepository).Assembly);
         //services.AddClassesMatchingInterfaces(typeof(ILookupsQuery).Assembly, typeof(LookupsQuery).Assembly);
@@ -36,6 +52,15 @@ public static class DIRegistration
         return services;
     }
 
+    public static void AddApiCorsSupport(this IServiceCollection services)
+    {
+        services.AddCors(o => o.AddPolicy("_allowOrigins", builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        }));
+    }
     public static void AddContext(this IServiceCollection services, IConfiguration configuration)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -60,6 +85,7 @@ public static class DIRegistration
         app.UseMiniProfiler();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCors("_allowOrigins");
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
@@ -76,6 +102,8 @@ public static class DIRegistration
         service.AddScoped(typeof(IListQuery<,>), typeof(ListQuery<,>));
         service.AddScoped(typeof(IGetByIdQuery<,>), typeof(GetByIdQuery<,>));
         service.AddScoped<ITreeQuery, TreeQuery>();
+
+        //service.AddScoped<Ilook>()
         //service.AddScoped(typeof(ILookupsQuery), typeof(LookupsQuery));
     }
 }

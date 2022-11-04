@@ -58,5 +58,8 @@
             "root": "",
             "sourceRoot": "src"
         }
+    },
+    "cli": {
+      "analytics": "53509416-fae0-406c-aa88-7ed56970c90d"
     }
 }

@@ -1,4 +1,5 @@
 using Architecture.Database;
+using Architecture.Database.UnitOfWork;
 using Architecture.Domain;
 using Architecture.Model;
 using DotNetCore.EntityFrameworkCore;
@@ -11,14 +12,14 @@ namespace Architecture.Application;
 public sealed class UserService : IUserService
 {
     private readonly IAuthService _authService;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAsyncUnitOfWork _unitOfWork;
     private readonly IUserFactory _userFactory;
     private readonly IUserRepository _userRepository;
 
     public UserService
     (
         IAuthService authService,
-        IUnitOfWork unitOfWork,
+        IAsyncUnitOfWork unitOfWork,
         IUserFactory userFactory,
         IUserRepository userRepository
     )
@@ -43,7 +44,7 @@ public sealed class UserService : IUserService
 
         await _userRepository.AddAsync(user);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.EndAsync();
 
         return user.Id.Success();
     }
@@ -56,7 +57,7 @@ public sealed class UserService : IUserService
 
         await _authService.DeleteAsync(authId);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
@@ -79,7 +80,7 @@ public sealed class UserService : IUserService
 
         await _userRepository.UpdateStatusAsync(user);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
@@ -103,7 +104,7 @@ public sealed class UserService : IUserService
 
         await _userRepository.UpdateAsync(user);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
