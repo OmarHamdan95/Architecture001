@@ -9,6 +9,7 @@ namespace Architecture.Web;
 
 [ApiController]
 [Route("users")]
+[AllowAnonymous]
 public sealed class UserController : ControllerBase
 {
     private readonly IUserService _userService;

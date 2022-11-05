@@ -35,7 +35,7 @@ public static class DIRegistration
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserFactory, UserFactory>();
-        services.AddScoped<IUserRepository, UserRepository>();
+        // services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAuthFactory, AuthFactory>();
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IHashService, HashService>();

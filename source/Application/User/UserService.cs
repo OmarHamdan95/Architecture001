@@ -1,11 +1,14 @@
 using Architecture.Database;
+using Architecture.Database.Queries;
 using Architecture.Database.UnitOfWork;
 using Architecture.Domain;
+using Architecture.Domain.Interfaces;
 using Architecture.Model;
 using DotNetCore.EntityFrameworkCore;
 using DotNetCore.Objects;
 using DotNetCore.Results;
 using DotNetCore.Validation;
+using Mapster;
 
 namespace Architecture.Application;
 
@@ -14,20 +17,26 @@ public sealed class UserService : IUserService
     private readonly IAuthService _authService;
     private readonly IAsyncUnitOfWork _unitOfWork;
     private readonly IUserFactory _userFactory;
-    private readonly IUserRepository _userRepository;
+    private readonly IAsyncRepository<User> _userRepository;
+    private readonly IGetByIdQuery<User, UserModel> _userGetByIdQuery;
+    private readonly IListQuery<User, UserModel> _userListQuery;
 
     public UserService
     (
         IAuthService authService,
         IAsyncUnitOfWork unitOfWork,
         IUserFactory userFactory,
-        IUserRepository userRepository
+        IAsyncRepository<User> userRepository,
+        IGetByIdQuery<User, UserModel> userGetByIdQuery,
+        IListQuery<User, UserModel> userListQuery
     )
     {
         _authService = authService;
         _unitOfWork = unitOfWork;
         _userFactory = userFactory;
         _userRepository = userRepository;
+        _userGetByIdQuery = userGetByIdQuery;
+        _userListQuery = userListQuery;
     }
 
     public async Task<IResult<long>> AddAsync(UserModel model)
@@ -51,11 +60,11 @@ public sealed class UserService : IUserService
 
     public async Task<IResult> DeleteAsync(long id)
     {
-        var authId = await _userRepository.GetAuthIdByUserIdAsync(id);
+        var user = await _userRepository.GetByIdAsync(id);
 
-        await _userRepository.DeleteAsync(id);
+        await _userRepository.DeleteAsync(user);
 
-        await _authService.DeleteAsync(authId);
+        await _authService.DeleteAsync(user.Auth.Id);
 
         await _unitOfWork.EndAsync();
 
@@ -64,12 +73,12 @@ public sealed class UserService : IUserService
 
     public Task<UserModel> GetAsync(long id)
     {
-        return _userRepository.GetModelAsync(id);
+        return _userGetByIdQuery.QueryAsync(id);
     }
 
     public Task<Grid<UserModel>> GridAsync(GridParameters parameters)
     {
-        return _userRepository.GridAsync(parameters);
+        return null;
     }
 
     public async Task<IResult> InactivateAsync(long id)
@@ -78,16 +87,17 @@ public sealed class UserService : IUserService
 
         user.Inactivate();
 
-        await _userRepository.UpdateStatusAsync(user);
+        await _userRepository.UpdateAsync(user);
 
         await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
 
-    public async Task<IEnumerable<UserModel>> ListAsync()
+    public async Task<List<UserModel>> ListAsync()
     {
-        return await _userRepository.ListModelAsync();
+        var res = (await _userListQuery.QueryAsync()).Adapt<List<UserModel>>();
+        return  res;
     }
 
     public async Task<IResult> UpdateAsync(UserModel model)
@@ -96,7 +106,7 @@ public sealed class UserService : IUserService
 
         if (validation.Failed) return validation;
 
-        var user = await _userRepository.GetAsync(model.Id);
+        var user = await _userRepository.GetByIdAsync(model.Id);
 
         if (user is null) return Result.Success();
 

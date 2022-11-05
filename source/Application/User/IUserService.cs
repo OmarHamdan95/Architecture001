@@ -16,7 +16,7 @@ public interface IUserService
 
     Task<IResult> InactivateAsync(long id);
 
-    Task<IEnumerable<UserModel>> ListAsync();
+    Task<List<UserModel>> ListAsync();
 
     Task<IResult> UpdateAsync(UserModel model);
 }
