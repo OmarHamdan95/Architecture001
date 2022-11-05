@@ -98,7 +98,11 @@ public class DBContextBase: DbContext
     // {
     //     foreach (var entity in ChangeTracker.Entries())
     //     {
-    //         if(entity.Entity is IEntityBase audetEntity)
+    //         if (entity.Entity is IEntityBase audetEntity)
+    //         {
+    //             if (entity.State == EntityState.Modified)
+    //                 entity.
+    //         }
     //     }
     // }
 }
