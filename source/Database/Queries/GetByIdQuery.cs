@@ -12,13 +12,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace Architecture.Database.Queries;
 
-public interface IGetByIdQuery<TEntity, TResult> where TEntity : EntityBase
-{
-    Task<TResult> QueryAsync((long id, Expression<Func<TEntity, TResult>> selector) input);
-    Task<TResult> QueryAsync(long id);
-    // Task<TResult> QueryAsyncAdapt(long id);
-    // Task<TResult> QueryAsync(long id , string expression);
-}
+
 
 public class GetByIdQuery<TEntity, TResult> : QueryBase,
     IQuery<long, TResult>,

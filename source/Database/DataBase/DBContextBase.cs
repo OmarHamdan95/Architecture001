@@ -1,4 +1,5 @@
 ﻿using Architecture.Domain;
+using DotNetCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -63,7 +64,7 @@ public class DBContextBase: DbContext
         }
         catch
         {
-            await RollbackTransaction();
+            await RollbackTransactionAsync();
             throw;
         }
         finally
@@ -76,7 +77,7 @@ public class DBContextBase: DbContext
         }
     }
 
-    public async Task RollbackTransaction()
+    public async Task RollbackTransactionAsync()
     {
         if (_transaction == null) return;
 
@@ -101,7 +102,7 @@ public class DBContextBase: DbContext
     //         if (entity.Entity is IEntityBase audetEntity)
     //         {
     //             if (entity.State == EntityState.Modified)
-    //                 entity.
+    //                 entity.Properties.GetPropertiesWithAttribute("") == DateTime.Now;
     //         }
     //     }
     // }

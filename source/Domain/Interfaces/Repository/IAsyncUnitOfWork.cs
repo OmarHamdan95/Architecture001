@@ -1,4 +1,4 @@
-﻿namespace Architecture.Database.UnitOfWork;
+﻿namespace Architecture.Domain.Interfaces;
 
 public interface IAsyncUnitOfWork : IDisposable
 {

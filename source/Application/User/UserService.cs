@@ -15,7 +15,7 @@ namespace Architecture.Application;
 public sealed class UserService : IUserService
 {
     private readonly IAuthService _authService;
-    private readonly IAsyncUnitOfWork _unitOfWork;
+    //private readonly IAsyncUnitOfWork _unitOfWork;
     private readonly IUserFactory _userFactory;
     private readonly IAsyncRepository<User> _userRepository;
     private readonly IGetByIdQuery<User, UserModel> _userGetByIdQuery;
@@ -24,7 +24,7 @@ public sealed class UserService : IUserService
     public UserService
     (
         IAuthService authService,
-        IAsyncUnitOfWork unitOfWork,
+        //IAsyncUnitOfWork unitOfWork,
         IUserFactory userFactory,
         IAsyncRepository<User> userRepository,
         IGetByIdQuery<User, UserModel> userGetByIdQuery,
@@ -32,7 +32,7 @@ public sealed class UserService : IUserService
     )
     {
         _authService = authService;
-        _unitOfWork = unitOfWork;
+        //_unitOfWork = unitOfWork;
         _userFactory = userFactory;
         _userRepository = userRepository;
         _userGetByIdQuery = userGetByIdQuery;
@@ -53,7 +53,9 @@ public sealed class UserService : IUserService
 
         await _userRepository.AddAsync(user);
 
-        await _unitOfWork.EndAsync();
+        //throw new Exception("");
+
+        //await _unitOfWork.EndAsync();
 
         return user.Id.Success();
     }
@@ -66,7 +68,7 @@ public sealed class UserService : IUserService
 
         await _authService.DeleteAsync(user.Auth.Id);
 
-        await _unitOfWork.EndAsync();
+        //await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
@@ -89,7 +91,7 @@ public sealed class UserService : IUserService
 
         await _userRepository.UpdateAsync(user);
 
-        await _unitOfWork.EndAsync();
+        //;await _unitOfWork.EndAsync();
 
         return Result.Success();
     }
@@ -114,7 +116,9 @@ public sealed class UserService : IUserService
 
         await _userRepository.UpdateAsync(user);
 
-        await _unitOfWork.EndAsync();
+        //throw new Exception("");
+
+        //await _unitOfWork.EndAsync();
 
         return Result.Success();
     }

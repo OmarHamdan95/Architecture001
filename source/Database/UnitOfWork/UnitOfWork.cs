@@ -1,4 +1,5 @@
 ﻿using Architecture.Database.DataBase;
+using Architecture.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace Architecture.Database.UnitOfWork;
@@ -45,6 +46,6 @@ public class UnitOfWork : IAsyncUnitOfWork
 
     public async Task Rollback(CancellationToken cancellationToken = default)
     {
-        await _dbContext.CommitTransactionAsync();
+        await _dbContext.RollbackTransactionAsync();
     }
 }

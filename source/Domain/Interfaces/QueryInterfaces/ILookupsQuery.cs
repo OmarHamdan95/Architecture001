@@ -7,7 +7,7 @@ using Architecture.Domain.BaseDto;
 using Architecture.Domain.Interfaces;
 
 
-namespace Architecture.Database.Queries
+namespace Architecture.Domain.Interfaces
 {
     public interface ILookupsQuery
     {

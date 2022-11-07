@@ -5,6 +5,7 @@ using Architecture.Database.Queries;
 using Architecture.Database.Queries.QueriesCustome;
 using Architecture.Database.UnitOfWork;
 using Architecture.Domain.Interfaces;
+using Architecture.Web.ActionFilter;
 using DotNetCore.AspNetCore;
 using DotNetCore.Security;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,19 @@ public static class DIRegistration
         services.AddHashService();
         services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
         services.AddResponseCompression();
-        services.AddControllers().AddJsonOptions().AddAuthorizationPolicy();
+        services.AddControllers(options =>
+        {
+            options.Filters.Add(typeof(UnitOfWorkActionFilter));
+        }).AddJsonOptions().AddAuthorizationPolicy();
         services.AddApiCorsSupport();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddProfiler();
 
+        // services.AddControllers(config =>
+        // {
+        //     config.Filters.Add(new UnitOfWorkActionFilter());
+        // });
 
         services.AddContext(configuration);
 
