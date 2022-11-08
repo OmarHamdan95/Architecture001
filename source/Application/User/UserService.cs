@@ -1,10 +1,8 @@
-using Architecture.Database;
 using Architecture.Database.Queries;
-using Architecture.Database.UnitOfWork;
 using Architecture.Domain;
+using Architecture.Domain.Extension;
 using Architecture.Domain.Interfaces;
 using Architecture.Model;
-using DotNetCore.EntityFrameworkCore;
 using DotNetCore.Objects;
 using DotNetCore.Results;
 using DotNetCore.Validation;
@@ -64,6 +62,9 @@ public sealed class UserService : IUserService
     {
         var user = await _userRepository.GetByIdAsync(id);
 
+        if (user.IsNull())
+            return Result.Fail();
+
         await _userRepository.DeleteAsync(user);
 
         await _authService.DeleteAsync(user.Auth.Id);
@@ -110,7 +111,7 @@ public sealed class UserService : IUserService
 
         var user = await _userRepository.GetByIdAsync(model.Id);
 
-        if (user is null) return Result.Success();
+        if (user.IsNull()) return Result.Fail();
 
         user.Update(model.FirstName, model.LastName, model.Email);
 
