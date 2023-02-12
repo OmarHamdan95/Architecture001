@@ -66,7 +66,8 @@ public class RepositoryBase<T> : IAsyncRepository<T> where T : EntityBase
     public virtual async Task DeleteAsync(T entity)
     {
         _dbContext.BeginTransaction();
-        _dbContext.Set<T>().Remove(entity);
+        entity.IsDeleted = true;
+        //_dbContext.Set<T>().Remove(entity);
         await _dbContext.SaveChangesAsync();
     }
 }

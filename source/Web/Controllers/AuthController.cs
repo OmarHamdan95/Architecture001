@@ -16,5 +16,5 @@ public sealed class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult SignIn(SignInModel model) => _authService.SignInAsync(model).ApiResult();
+    public async Task<IActionResult> SignIn(SignInModel model) => (await _authService.SignInAsync(model)).ApiResult();
 }

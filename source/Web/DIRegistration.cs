@@ -75,6 +75,7 @@ public static class DIRegistration
 
         var connectionString = configuration.GetConnectionString(nameof(Context));
         services.AddDbContext<Context>(x => x.UseLazyLoadingProxies().UseNpgsql(connectionString));
+        //services.AddDbContext<Context>(x => x.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
         services.AddScoped<DBContextBase>(provide => provide.GetService<Context>());
         services.AddScoped<IQueryContext, QueryContext>();

@@ -91,6 +91,8 @@ public sealed class AuthService : IAuthService
 
         var token = _jwtService.Encode(claims);
 
-        return new TokenModel(token).Success();
+        var x = new TokenModel(token);
+
+        return x.Success();
     }
 }

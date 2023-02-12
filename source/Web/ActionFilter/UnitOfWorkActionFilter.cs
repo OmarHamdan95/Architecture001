@@ -18,9 +18,10 @@ public class UnitOfWorkActionFilter :  IAsyncActionFilter
         var result = await next();
 
          if (result.Exception != null )
-            await _unitOfWork.EndAsync();
+             await _unitOfWork.Rollback();
         else
-            await _unitOfWork.Rollback();
+             await _unitOfWork.EndAsync();
+
     }
 
    // private bool IsValidStatusCode()
