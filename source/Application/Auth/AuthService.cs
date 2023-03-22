@@ -56,11 +56,11 @@ public sealed class AuthService : IAuthService
 
     public async Task<IResult<TokenModel>> SignInAsync(SignInModel model)
     {
-         var failResult = Result<TokenModel>.Fail("Invalid login or password!");
+        var failResult = Result<TokenModel>.Fail("Invalid login or password!");
         //
-        // var validation = new SignInModelValidator().Validation(model);
-        //
-        // if (validation.Failed) return failResult;
+        var validation = new SignInModelValidator().Validation(model);
+
+        if (validation.Failed) return failResult;
         //
         // var auth = await _authRepository.GetByLoginAsync(model.Login);
         //
