@@ -7,6 +7,8 @@ import { AppErrorHandler } from "./app.error.handler";
 import { AppHttpInterceptor } from "./app.http.interceptor";
 import { ROUTES } from "./app.routes";
 import { AppSettingsService } from "./settings/settings.service";
+import {SharedModule} from "./shared/shared.module";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -14,7 +16,9 @@ import { AppSettingsService } from "./settings/settings.service";
     imports: [
         BrowserModule,
         HttpClientModule,
-        RouterModule.forRoot(ROUTES)
+        RouterModule.forRoot(ROUTES),
+        SharedModule,
+        CoreModule
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
